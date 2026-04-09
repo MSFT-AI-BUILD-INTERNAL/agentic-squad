@@ -1,27 +1,19 @@
-# Squad Team
+# Planner-Executor Team Template
 
-> agentic-squad — Squad 기반 Agent Teams 패턴 정의 프로젝트
+> 이 파일을 `.squad/team.md`로 복사하여 프로젝트에 맞게 수정하세요.
 
-## Coordinator
+## Planner
+- 역할: 계획 수립
+- 목표: 요구사항을 분석하여 태스크 목록, 의존성, 실행 순서, 완료 기준을 정의
 
-| Name | Role | Notes |
-|------|------|-------|
-| Squad | Coordinator | Routes work, enforces handoffs and reviewer gates. |
+## Executor
+- 역할: 태스크 실행
+- 목표: 계획에 따라 각 태스크를 순서대로 구현
 
-## Members
+## Validator
+- 역할: 검증
+- 목표: 각 태스크가 완료 기준을 충족하는지 검증하고 Pass/Revise 판정
 
-| Name | Role | Charter | Status |
-|------|------|---------|--------|
-| Morpheus | Lead | .squad/agents/morpheus/charter.md | 🏗️ Lead |
-| Oracle | Pattern Designer | .squad/agents/oracle/charter.md | 📝 Designer |
-| Neo | Developer | .squad/agents/neo/charter.md | 🔧 Dev |
-| Trinity | Reviewer | .squad/agents/trinity/charter.md | 🧪 Reviewer |
-| Scribe | Session Logger | .squad/agents/scribe/charter.md | 📋 Silent |
-| Ralph | Work Monitor | .squad/agents/ralph/charter.md | 🔄 Monitor |
-
-## Project Context
-
-- **Owner:** thomas.park
-- **Project:** Agent Teams 패턴 정의 — Squad 기반 에이전트 팀 패턴 샘플 (Debate & Critic, Generator & Evaluator, Planner & Executor)
-- **Stack:** Markdown, Squad agent configurations
-- **Created:** 2026-04-09
+## Scribe
+- 역할: 기록자
+- 목표: 계획·실행·검증 과정과 최종 결과를 문서화

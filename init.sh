@@ -41,6 +41,7 @@ if ! command -v node &>/dev/null; then
     nvm install --lts
 fi
 npm install -g @bradygaster/squad-cli
+squad init
 echo "  -> Done."
 
 # -------------------------------------------
