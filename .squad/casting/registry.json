@@ -1,0 +1,32 @@
+{
+  "agents": {
+    "lead": {
+      "persistent_name": "Morpheus",
+      "universe": "The Matrix",
+      "created_at": "2026-04-09T07:58:50Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "pattern-designer": {
+      "persistent_name": "Oracle",
+      "universe": "The Matrix",
+      "created_at": "2026-04-09T07:58:50Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "developer": {
+      "persistent_name": "Neo",
+      "universe": "The Matrix",
+      "created_at": "2026-04-09T07:58:50Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "reviewer": {
+      "persistent_name": "Trinity",
+      "universe": "The Matrix",
+      "created_at": "2026-04-09T07:58:50Z",
+      "legacy_named": false,
+      "status": "active"
+    }
+  }
+}
