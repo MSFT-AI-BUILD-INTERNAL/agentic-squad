@@ -40,4 +40,17 @@
 - `gh pr create --draft`는 허용 (GitHub CLI 관리하 push이므로 예외)
 - 위반 시 즉시 중단 → 로그 기록 → 사용자 알림 3단계 처리
 
+### 2026-04-09: Debate & Critic 패턴 대폭 간소화
+
+**변경 사항**:
+- 기존 6개 파일(2,636줄, ~78KB)을 2개 파일(158줄, ~4KB)로 축소
+- 삭제: flow.md, example.md, routing.md, .summary.txt, 기존 team.md
+- README.md를 Quick Start Guide 형태로 전면 재작성 (135줄)
+- team.md를 복사 가능한 최소 템플릿으로 재작성 (23줄)
+
+**방향성 (thomas.park 지시)**:
+- patterns 폴더는 간결한 템플릿과 실행 가이드만 포함
+- 실제 토론/논의는 사용자가 Squad를 통해 직접 수행
+- 상세 시뮬레이션이나 프롬프트 템플릿은 포함하지 않음
+
 <!-- Append new learnings below. Each entry is something lasting about the project. -->
