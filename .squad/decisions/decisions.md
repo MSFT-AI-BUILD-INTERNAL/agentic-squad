@@ -1,5 +1,33 @@
 # Team Decisions
 
+## Decision: Git Push Prohibition Directive
+
+**Date**: 2026-04-09  
+**Author**: thomas.park (via Copilot)  
+**Status**: Active  
+**Type**: Agent Harness Rule
+
+### Context
+
+User directive received to enforce git push prohibition across all agents.
+
+### Decision
+
+Define git push prohibition harness rule in AGENTS.md for all team agents:
+- **Directive**: git push 절대 금지 — git push 명령 실행 금지
+- **Scope**: All agents in agentic-squad
+- **Enforcement**: Harness rules in AGENTS.md
+
+### Rationale
+
+User explicitly requested that no agent should execute git push commands. This is captured as a team-wide harness rule to prevent accidental or unauthorized repository modifications.
+
+### Status
+
+Captured for team memory and AGENTS.md harness implementation.
+
+---
+
 ## Decision: Debate and Critic Pattern 설계 방향
 
 **Date**: 2024-04-09  
