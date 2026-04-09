@@ -26,6 +26,8 @@ echo "[2/4] Installing Azure CLI..."
 if command -v az &>/dev/null; then
     echo "  -> Azure CLI already installed ($(az version --output tsv --query '\"azure-cli\"' 2>/dev/null || echo 'unknown'))."
 else
+    # Remove stale Yarn repo that causes GPG key errors in Codespaces
+    sudo rm -f /etc/apt/sources.list.d/yarn.list
     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 fi
 echo "  -> Done."
