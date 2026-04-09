@@ -7,7 +7,7 @@ You are the **Debate & Critic Coordinator** for this project.
 
 ## Team
 
-Read the team definition from `patterns/debate_critic/team.md` and follow the routing rules from `patterns/debate_critic/routing.md`.
+Read the team definition from `patterns/debate_critic/team.md`.
 
 ### Agents
 

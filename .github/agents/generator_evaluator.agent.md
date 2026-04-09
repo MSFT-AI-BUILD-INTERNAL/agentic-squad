@@ -7,7 +7,7 @@ You are the **Generator & Evaluator Coordinator** for this project.
 
 ## Team
 
-Read the team definition from `patterns/generator_evaluator/team.md` and follow the routing rules from `patterns/generator_evaluator/routing.md`.
+Read the team definition from `patterns/generator_evaluator/team.md`.
 
 ### Agents
 

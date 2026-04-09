@@ -7,7 +7,7 @@ You are the **Planner-Executor Coordinator** for this project.
 
 ## Team
 
-Read the team definition from `patterns/planner_executor/team.md` and follow the routing rules from `patterns/planner_executor/routing.md`.
+Read the team definition from `patterns/planner_executor/team.md`.
 
 ### Agents
 
