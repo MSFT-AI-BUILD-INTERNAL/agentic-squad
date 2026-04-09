@@ -6,16 +6,11 @@ echo " Codespace Environment Setup"
 echo "========================================="
 
 # -------------------------------------------
-# 1. GitHub Copilot CLI (gh extension)
+# 1. GitHub Copilot CLI (standalone binary via npm)
 # -------------------------------------------
 echo ""
 echo "[1/4] Installing GitHub Copilot CLI..."
-if gh extension list 2>/dev/null | grep -q "gh-copilot"; then
-    echo "  -> GitHub Copilot CLI already installed. Upgrading..."
-    gh extension upgrade github/gh-copilot || true
-else
-    gh extension install github/gh-copilot
-fi
+npm install -g @github/copilot
 echo "  -> Done."
 
 # -------------------------------------------
@@ -72,7 +67,7 @@ echo " Setup Complete!"
 echo "========================================="
 echo ""
 echo "Installed versions:"
-echo "  gh copilot : $(gh copilot --version 2>/dev/null || echo 'run: gh copilot --version')"
+echo "  copilot    : $(copilot --version 2>/dev/null || echo 'run: copilot --version')"
 echo "  az         : $(az version --output tsv --query '"azure-cli"' 2>/dev/null || echo 'run: az --version')"
 echo "  squad      : $(squad --version 2>/dev/null || echo 'run: squad --version')"
 echo "  uv         : $(uv --version 2>/dev/null || echo 'run: uv --version')"
