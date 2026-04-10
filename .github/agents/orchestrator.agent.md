@@ -21,6 +21,7 @@ Read each pattern's definition to understand their purpose:
 | **Planner-Executor** | `patterns/planner_executor/team.md`, `patterns/planner_executor/routing.md` | 구현 작업, 마이그레이션, 리팩토링, 프로젝트 셋업 등 **계획 → 실행 → 검증**이 필요한 작업 |
 | **Debate & Critic** | `patterns/debate_critic/team.md`, `patterns/debate_critic/routing.md` | 아키텍처 선택, 기술 스택 비교, 트레이드오프 분석 등 **의사결정**이 필요한 주제 |
 | **Generator-Evaluator** | `patterns/generator_evaluator/team.md`, `patterns/generator_evaluator/routing.md` | 코드/문서/콘텐츠 생성, 리뷰, 테스트 케이스 작성 등 **생성 → 평가 → 개선** 반복이 필요한 작업 |
+| **Leadership** | `patterns/leadership/team.md` | 클라우드 전략, 보안 정책, 투자 우선순위 등 **다중 도메인 C-Level 경영진 관점**의 전략적 의사결정이 필요한 주제 |
 
 ## Selection Heuristics
 
@@ -41,6 +42,11 @@ Analyze the user's intent using these signals:
 - Content/code generation with quality iteration
 - Keywords: generate, write, review, evaluate, improve, draft, 초안
 
+### → Leadership
+- "경영진 회의", "전략 논의", "C-Level", "다중 관점 검토", "투자 결정"
+- Strategic decisions requiring technology, security, finance, and product perspectives
+- Keywords: 전략, 경영진, leadership, C-Level, 보안 정책, 투자, 예산, 로드맵, 다중 관점
+
 ### → Ambiguous
 If the intent is unclear, briefly ask the user which pattern fits best. Present options:
 ```
@@ -48,6 +54,7 @@ If the intent is unclear, briefly ask the user which pattern fits best. Present 
 1. 📐 계획-실행 (Plan & Execute) — 단계별 계획 후 구현
 2. ⚔️ 토론-비평 (Debate & Critic) — 대립적 논의로 최선안 도출
 3. ⚡ 생성-평가 (Generate & Evaluate) — 반복 개선으로 품질 향상
+4. 🏛️ 경영진 회의 (Leadership) — CEO·CTO·CISO·CFO·CPO 다중 도메인 전략 논의
 ```
 
 ## Execution Flow
