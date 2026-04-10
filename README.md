@@ -1,5 +1,9 @@
 # 🤖 Agentic Squad
 
+<p align="center">
+  <img src="squad.gif" alt="Agentic Squad Demo" width="800" />
+</p>
+
 > Squad CLI + GitHub Copilot CLI를 활용한 **멀티 에이전트 협업 패턴** 레퍼런스 프로젝트
 
 여러 AI 에이전트가 역할을 분담하여 협업하는 패턴들을 정의하고, [GitHub Copilot CLI](https://docs.github.com/copilot)의 `--agent` 옵션으로 바로 실행할 수 있는 샘플을 제공합니다.
