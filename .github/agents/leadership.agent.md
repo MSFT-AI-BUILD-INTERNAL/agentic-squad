@@ -62,48 +62,30 @@ Read the team definition from `patterns/leadership/team.md`.
 
 ### File-Based State Management
 
-이 패턴의 실행 상태를 `.squad/patterns/` 에 파일로 영속화하여 세션 중단 시에도 복구할 수 있도록 한다.
+**공유 스킬:** `/session-state-management` 스킬의 Session Init / After Each Step / On Completion 라이프사이클을 따른다.
 
-#### Session Init (세션 시작 시)
+#### 패턴 고유 설정
 
-1. `.squad/patterns/state.json` 을 읽는다.
-2. `active` 가 이 패턴(`leadership`)의 세션 ID를 가리키고 있으면:
-   - 해당 세션의 `progress.json` 을 읽고 중단된 Phase 를 파악한다.
-   - 사용자에게 알린다: `"이전 세션이 Phase {N} 에서 중단되었습니다. 이어서 진행합니다."` 
-   - 이미 `agents/` 에 산출물이 있는 에이전트는 건너뛴다.
-3. `active` 가 null 이면 새 세션을 생성한다:
-   - 세션 ID: `{ISO-date}-leadership-{slug}` (slug 은 사용자 프롬프트에서 2~3 단어)
-   - `.squad/patterns/{session-id}/` 디렉토리 생성
-   - `meta.json` 작성: `{ "id": "{session-id}", "pattern": "leadership", "prompt": "{사용자 프롬프트}", "createdAt": "{ISO}", "status": "in-progress", "user": "{git user.name}" }`
-   - `progress.json` 초기화:
-     ```json
-     {
-       "currentPhase": 1,
-       "phases": {
-         "1_agenda": { "status": "pending", "agent": "CEO" },
-         "2_briefing": { "status": "pending", "agents": { "CTO": "pending", "CISO": "pending", "CFO": "pending", "CPO": "pending" } },
-         "3_cross_review": { "status": "pending", "round": 0, "maxRounds": 2 },
-         "4_decision": { "status": "pending" }
-       }
-     }
-     ```
-   - `agents/` 디렉토리 생성
-   - `.squad/patterns/state.json` 의 `active` 를 세션 ID 로 업데이트
-
-#### After Each Agent Step (에이전트 완료 시마다)
-
-1. 에이전트 산출물을 `.squad/patterns/{session-id}/agents/{agent-name}.md` 에 기록한다.
-2. `progress.json` 에서 해당 에이전트의 status 를 `"completed"` 로 업데이트한다.
-3. Phase 내 모든 에이전트가 완료되면 `currentPhase` 를 다음으로 전환한다.
-4. `meta.json` 의 `updatedAt` 을 갱신한다.
-
-#### On Completion (완료 시)
-
-1. `meta.json` 의 `status` 를 `"completed"` 로 변경한다.
-2. Chief of Staff 산출물을 `.squad/patterns/{session-id}/summary.md` 로 복사한다.
-3. `.squad/patterns/state.json` 의 `active` 를 `null` 로, `history` 에 `{ "id", "pattern", "status": "completed", "summary": "{1줄 요약}" }` 를 추가한다.
-4. `.squad/patterns/history/{date}-leadership-{slug}.md` 에 최종 요약을 append 한다.
-5. 의사결정이 있으면 `.squad/decisions/inbox/leadership-{slug}.md` 로 드롭한다.
+- **패턴명:** `leadership`
+- **반복 단위:** Phase (1: Agenda → 2: Briefing → 3: Cross-Review → 4: Decision), Cross-Review 최대 2회
+- **progress.json 초기값:**
+  ```json
+  {
+    "currentPhase": 1,
+    "phases": {
+      "1_agenda": { "status": "pending", "agent": "CEO" },
+      "2_briefing": { "status": "pending", "agents": { "CTO": "pending", "CISO": "pending", "CFO": "pending", "CPO": "pending" } },
+      "3_cross_review": { "status": "pending", "round": 0, "maxRounds": 2 },
+      "4_decision": { "status": "pending" }
+    }
+  }
+  ```
+- **산출물 파일명:** `{agent-name}.md` (예: `ceo.md`, `cto.md`)
+- **Step 업데이트 로직:**
+  1. `progress.json` 에서 해당 에이전트의 status 를 `"completed"` 로 업데이트
+  2. Phase 내 모든 에이전트가 완료되면 `currentPhase` 를 다음으로 전환
+- **의사결정 드롭:** 있음 — `.squad/decisions/inbox/leadership-{slug}.md`
+- **Summary 작성자:** Chief of Staff
 
 ### AGENTS.md
 
