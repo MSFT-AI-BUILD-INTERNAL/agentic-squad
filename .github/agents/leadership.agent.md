@@ -60,6 +60,51 @@ Read the team definition from `patterns/leadership/team.md`.
 - **CFO**: 수치 기반 분석. 감정이 아닌 데이터로 판단. TCO, ROI, 기회비용을 구체적 수치나 범위로 제시. 단기 비용과 장기 가치의 균형.
 - **CPO**: 사용자 중심 사고. 기술적 우수성보다 사용자 가치 전달을 우선. 시장과 경쟁사 맥락에서 판단. 제품-시장 적합성을 항상 고려.
 
+### File-Based State Management
+
+이 패턴의 실행 상태를 `.squad/patterns/` 에 파일로 영속화하여 세션 중단 시에도 복구할 수 있도록 한다.
+
+#### Session Init (세션 시작 시)
+
+1. `.squad/patterns/state.json` 을 읽는다.
+2. `active` 가 이 패턴(`leadership`)의 세션 ID를 가리키고 있으면:
+   - 해당 세션의 `progress.json` 을 읽고 중단된 Phase 를 파악한다.
+   - 사용자에게 알린다: `"이전 세션이 Phase {N} 에서 중단되었습니다. 이어서 진행합니다."` 
+   - 이미 `agents/` 에 산출물이 있는 에이전트는 건너뛴다.
+3. `active` 가 null 이면 새 세션을 생성한다:
+   - 세션 ID: `{ISO-date}-leadership-{slug}` (slug 은 사용자 프롬프트에서 2~3 단어)
+   - `.squad/patterns/{session-id}/` 디렉토리 생성
+   - `meta.json` 작성: `{ "id": "{session-id}", "pattern": "leadership", "prompt": "{사용자 프롬프트}", "createdAt": "{ISO}", "status": "in-progress", "user": "{git user.name}" }`
+   - `progress.json` 초기화:
+     ```json
+     {
+       "currentPhase": 1,
+       "phases": {
+         "1_agenda": { "status": "pending", "agent": "CEO" },
+         "2_briefing": { "status": "pending", "agents": { "CTO": "pending", "CISO": "pending", "CFO": "pending", "CPO": "pending" } },
+         "3_cross_review": { "status": "pending", "round": 0, "maxRounds": 2 },
+         "4_decision": { "status": "pending" }
+       }
+     }
+     ```
+   - `agents/` 디렉토리 생성
+   - `.squad/patterns/state.json` 의 `active` 를 세션 ID 로 업데이트
+
+#### After Each Agent Step (에이전트 완료 시마다)
+
+1. 에이전트 산출물을 `.squad/patterns/{session-id}/agents/{agent-name}.md` 에 기록한다.
+2. `progress.json` 에서 해당 에이전트의 status 를 `"completed"` 로 업데이트한다.
+3. Phase 내 모든 에이전트가 완료되면 `currentPhase` 를 다음으로 전환한다.
+4. `meta.json` 의 `updatedAt` 을 갱신한다.
+
+#### On Completion (완료 시)
+
+1. `meta.json` 의 `status` 를 `"completed"` 로 변경한다.
+2. Chief of Staff 산출물을 `.squad/patterns/{session-id}/summary.md` 로 복사한다.
+3. `.squad/patterns/state.json` 의 `active` 를 `null` 로, `history` 에 `{ "id", "pattern", "status": "completed", "summary": "{1줄 요약}" }` 를 추가한다.
+4. `.squad/patterns/history/{date}-leadership-{slug}.md` 에 최종 요약을 append 한다.
+5. 의사결정이 있으면 `.squad/decisions/inbox/leadership-{slug}.md` 로 드롭한다.
+
 ### AGENTS.md
 
 This project has an `AGENTS.md` harness at the repo root. Read it and follow all rules before executing any git or external commands.

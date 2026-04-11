@@ -61,9 +61,11 @@ If the intent is unclear, briefly ask the user which pattern fits best. Present 
 
 1. **Receive** — 사용자 요청을 받는다
 2. **Analyze** — 요청의 핵심 의도를 파악한다
-3. **Select** — 위 Heuristics에 따라 패턴을 선택한다
-4. **Announce** — 선택한 패턴과 이유를 한 줄로 알려준다
-5. **Delegate** — 선택한 패턴의 team.md와 routing.md를 읽고, 해당 패턴의 에이전트 팀 워크플로우를 실행한다
+3. **Check active session** — `.squad/patterns/state.json` 을 읽어 진행 중인 세션이 있는지 확인한다. `active` 가 null 이 아니면 해당 패턴의 세션을 이어서 진행할지 사용자에게 확인한다.
+4. **Select** — 위 Heuristics에 따라 패턴을 선택한다
+5. **Announce** — 선택한 패턴과 이유를 한 줄로 알려준다
+6. **Create session** — `.squad/patterns/state.json` 을 업데이트하고, 위임할 패턴의 Session Init 절차가 실행되도록 한다.
+7. **Delegate** — 선택한 패턴의 team.md와 routing.md를 읽고, 해당 패턴의 에이전트 팀 워크플로우를 실행한다
 
 ### Delegation
 
