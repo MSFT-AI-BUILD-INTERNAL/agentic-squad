@@ -40,7 +40,8 @@ agentic-squad/
     ├── debate_critic/                  # 변증법적 토론 패턴
     ├── generator_evaluator/            # 생성-평가 반복 패턴
     ├── leadership/                     # 리더십 토론 패턴
-    └── planner_executor/               # 계획-실행 분리 패턴
+    ├── planner_executor/               # 계획-실행 분리 패턴
+    └── research_report/                # 심층 조사-보고 패턴
 ```
 
 ## 시작하기
@@ -110,7 +111,7 @@ squad doctor       # 설정 검증
 copilot --agent orchestrator --yolo
 ```
 
-Orchestrator는 프롬프트의 의도를 분석하여 아래 네 패턴 중 하나를 선택합니다:
+Orchestrator는 프롬프트의 의도를 분석하여 아래 다섯 패턴 중 하나를 선택합니다:
 
 | 사용자 의도 | 선택 패턴 |
 |------------|----------|
@@ -118,6 +119,7 @@ Orchestrator는 프롬프트의 의도를 분석하여 아래 네 패턴 중 하
 | "비교해줘", "장단점", "뭐가 나을까" | ⚔️ Debate & Critic |
 | "생성해줘", "리뷰해줘", "개선해줘" | ⚡ Generator-Evaluator |
 | "전략 논의", "경영진 회의", "C-Level" | 🏛️ Leadership |
+| "조사해줘", "리서치", "보고서 만들어줘" | 🔍 Research & Report |
 
 #### 📖 Context Routing (선택 기능)
 
@@ -166,13 +168,13 @@ project/{topic}/
 
 #### 패턴별 팀 비교
 
-| | 📐 Planner-Executor | ⚔️ Debate & Critic | ⚡ Generator-Evaluator | 🏛️ Leadership |
-|---|---|---|---|---|
-| **목적** | 체계적 실행 | 최선의 결론 도출 | 반복 개선으로 품질 향상 | 전략적 의사결정 |
-| **팀 구성** | Planner → Executor → Validator | Proposer ↔ Opponent → Critic → Synthesizer | Generator → Evaluator → Refiner | CEO → CTO/CISO/CFO/CPO → Cross-Review |
-| **핵심 루프** | 계획 → 실행 → 검증 → (수정) | 제안 → 반론 → 평가 → (재논의) | 생성 → 평가 → 개선 → (재평가) | 안건 → 브리핑 → 교차검토 → 결정 |
-| **최대 반복** | 계획 수정 후 재실행 | 3 Rounds | 3 Cycles | 2 Cross-Review Rounds |
-| **적합한 작업** | 구현, 마이그레이션, 셋업 | 기술 선택, 아키텍처 비교 | 코드 생성, 문서 작성, 리뷰 | 기술 전략, 보안 정책, 투자 결정 |
+| | 📐 Planner-Executor | ⚔️ Debate & Critic | ⚡ Generator-Evaluator | 🏛️ Leadership | 🔍 Research & Report |
+|---|---|---|---|---|---|
+| **목적** | 체계적 실행 | 최선의 결론 도출 | 반복 개선으로 품질 향상 | 전략적 의사결정 | 심층 조사 기반 신뢰할 수 있는 보고서 산출 |
+| **팀 구성** | Planner → Executor → Validator | Proposer ↔ Opponent → Critic → Synthesizer | Generator → Evaluator → Refiner | CEO → CTO/CISO/CFO/CPO → Cross-Review | Researcher → Reasoner → Reporter |
+| **핵심 루프** | 계획 → 실행 → 검증 → (수정) | 제안 → 반론 → 평가 → (재논의) | 생성 → 평가 → 개선 → (재평가) | 안건 → 브리핑 → 교차검토 → 결정 | 조사 → 검증 → 보고 → (보완 조사) |
+| **최대 반복** | 계획 수정 후 재실행 | 3 Rounds | 3 Cycles | 2 Cross-Review Rounds | 3 Rounds |
+| **적합한 작업** | 구현, 마이그레이션, 셋업 | 기술 선택, 아키텍처 비교 | 코드 생성, 문서 작성, 리뷰 | 기술 전략, 보안 정책, 투자 결정 | 리서치, 동향 분석, 시장 조사, 경쟁사 분석 |
 
 ---
 
@@ -242,7 +244,25 @@ project/{topic}/
 
 ---
 
-#### 시나리오 4: "클라우드 마이그레이션 전략을 경영진 관점에서 논의해줘"
+#### 시나리오 4: "LLM 기반 코드 리뷰 도구를 조사하고 비교 보고서 만들어줘"
+
+> **선택 패턴:** 🔍 Research & Report
+
+```
+사용자 ──▶ Orchestrator ──▶ Research & Report 팀 선택
+```
+
+| 단계 | 에이전트 | 수행 내용 |
+|------|---------|----------|
+| Round 1 | **Researcher** | Context 분석 후 주요 LLM 코드 리뷰 도구 5종 선정, 기능·가격·지원 언어·통합 방식별 심층 조사 |
+| | **Reasoner** | 조사 결과 검증 — 도구 2종의 가격 정보가 outdated, 지원 언어 목록 불완전 → ❌ **Revise** |
+| Round 2 | **Researcher** | 지적 사항 보완 — 최신 가격 반영, 지원 언어 목록 업데이트, 사용자 리뷰 기반 만족도 데이터 추가 |
+| | **Reasoner** | 재검증 — 모든 항목 정확성 확인, Context 부합 확인 → ✅ **Pass** |
+| 최종 | **Reporter** | 핵심 요약(Executive Summary), 도구별 상세 비교표, 추천 순위 및 도입 제언을 포함한 보고서 산출 |
+
+---
+
+#### 시나리오 5: "클라우드 마이그레이션 전략을 경영진 관점에서 논의해줘"
 
 > **선택 패턴:** 🏛️ Leadership
 
@@ -373,6 +393,41 @@ copilot --agent planner_executor --yolo
 
 ---
 
+### 🔍 Research & Report (심층 조사-보고)
+
+> Context 기반 심층 조사와 검증을 거쳐 체계적인 보고 자료를 산출하는 패턴
+
+**패턴 상세:** [`patterns/research_report/README.md`](patterns/research_report/README.md)
+
+```bash
+copilot --agent research_report --yolo
+```
+
+#### 에이전트 구성
+
+| 역할 | 설명 |
+|------|------|
+| **Researcher** | Context를 이해하고 주어진 항목에 대한 심층 조사 수행 |
+| **Reasoner** | 조사 내용의 사실 정확성 검증 및 Context 부합 여부 검사 |
+| **Reporter** | 검증된 조사 결과를 Context 기반 보고용 자료로 체계적 정리 |
+
+#### 예시 프롬프트
+
+```
+LLM 기반 코드 리뷰 도구들을 조사하고 비교 보고서 만들어줘
+2026년 클라우드 네이티브 기술 동향을 리서치하고 요약 보고서 만들어줘
+우리 서비스의 경쟁사 현황을 조사하고 분석 보고서 작성해줘
+```
+
+#### 진행 흐름
+
+1. **Researcher** → Context 분석 및 항목별 심층 조사
+2. **Reasoner** → 정확성 검증 및 Context 부합 검사 (Pass/Revise)
+3. Revise → **Researcher** 보완 조사 → 재검증 (최대 3 Rounds)
+4. Pass → **Reporter** 보고 자료 정리 (핵심 요약, 상세 분석, 결론 및 제언)
+
+---
+
 ### 🏛️ Leadership (경영진 토론)
 
 > C-Level 경영진이 각자의 도메인 전문성으로 안건을 논의하고 전략적 의사결정을 내리는 패턴
@@ -445,6 +500,7 @@ AI 투자 우선순위를 결정해줘
 | ⚔️ Debate & Critic | Round (최대 3회) | `currentRound`, 에이전트별 완료 여부, `converged` |
 | ⚡ Generator-Evaluator | Cycle (최대 3회) | `currentCycle`, Cycle별 `verdict`, `scores` |
 | 🏛️ Leadership | Phase (agenda → briefing → cross-review → decision) | `currentPhase`, 브리핑 완료 여부, `crossReviewRound` |
+| 🔍 Research & Report | Round (최대 3회) | `currentRound`, `verdict` (Pass/Revise), 에이전트별 완료 여부 |
 
 ### 세션 라이프사이클
 
@@ -464,7 +520,7 @@ AI 투자 우선순위를 결정해줘
 |------|------|------|
 | `session-state-management` | `.github/skills/session-state-management/` | 파일 기반 세션 상태 관리 라이프사이클 |
 
-모든 패턴 에이전트(`debate_critic`, `generator_evaluator`, `planner_executor`, `leadership`)가 이 스킬을 참조하여 세션 상태를 영속화합니다. 각 에이전트에는 패턴 고유 설정(progress schema, 파일명 규칙, step 로직)만 남기고, 공통 라이프사이클은 스킬에 위임합니다.
+모든 패턴 에이전트(`debate_critic`, `generator_evaluator`, `planner_executor`, `leadership`, `research_report`)가 이 스킬을 참조하여 세션 상태를 영속화합니다. 각 에이전트에는 패턴 고유 설정(progress schema, 파일명 규칙, step 로직)만 남기고, 공통 라이프사이클은 스킬에 위임합니다.
 
 ### 커스텀 스킬 추가하기
 
