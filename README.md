@@ -22,6 +22,7 @@ agentic-squad/
 │   ├── debate_critic.agent.md          # 토론-비평 패턴 에이전트
 │   ├── generator_evaluator.agent.md    # 생성-평가 패턴 에이전트
 │   ├── leadership.agent.md             # 리더십 토론 패턴 에이전트
+│   ├── research_report.agent.md        # 심층 조사-보고 패턴 에이전트
 │   └── squad.agent.md                  # Squad 기본 팀 에이전트
 ├── .github/skills/                     # Agent Skills — 에이전트 공유 스킬
 │   └── session-state-management/       # 세션 상태 관리 스킬

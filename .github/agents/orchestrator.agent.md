@@ -22,6 +22,7 @@ Read each pattern's definition to understand their purpose:
 | **Debate & Critic** | `patterns/debate_critic/team.md`, `patterns/debate_critic/routing.md` | 아키텍처 선택, 기술 스택 비교, 트레이드오프 분석 등 **의사결정**이 필요한 주제 |
 | **Generator-Evaluator** | `patterns/generator_evaluator/team.md`, `patterns/generator_evaluator/routing.md` | 코드/문서/콘텐츠 생성, 리뷰, 테스트 케이스 작성 등 **생성 → 평가 → 개선** 반복이 필요한 작업 |
 | **Leadership** | `patterns/leadership/team.md` | 클라우드 전략, 보안 정책, 투자 우선순위 등 **다중 도메인 C-Level 경영진 관점**의 전략적 의사결정이 필요한 주제 |
+| **Research & Report** | `patterns/research_report/team.md` | 기술 리서치, 시장 조사, 경쟁사 분석, 동향 보고서 등 **심층 조사 → 검증 → 보고**가 필요한 작업 |
 
 ## Selection Heuristics
 
@@ -47,6 +48,11 @@ Analyze the user's intent using these signals:
 - Strategic decisions requiring technology, security, finance, and product perspectives
 - Keywords: 전략, 경영진, leadership, C-Level, 보안 정책, 투자, 예산, 로드맵, 다중 관점
 
+### → Research & Report
+- "조사해줘", "리서치해줘", "보고서 만들어줘", "분석 보고서", "동향 조사"
+- In-depth research with fact verification and structured report output
+- Keywords: 조사, 리서치, research, 보고서, report, 동향, 시장 조사, 경쟁사 분석, 기술 동향, 현황 분석
+
 ### → Ambiguous
 If the intent is unclear, briefly ask the user which pattern fits best. Present options:
 ```
@@ -55,6 +61,7 @@ If the intent is unclear, briefly ask the user which pattern fits best. Present 
 2. ⚔️ 토론-비평 (Debate & Critic) — 대립적 논의로 최선안 도출
 3. ⚡ 생성-평가 (Generate & Evaluate) — 반복 개선으로 품질 향상
 4. 🏛️ 경영진 회의 (Leadership) — CEO·CTO·CISO·CFO·CPO 다중 도메인 전략 논의
+5. 🔍 심층 조사-보고 (Research & Report) — 조사·검증·보고서 산출
 ```
 
 ## Context Routing (프로젝트 컨텍스트 라우팅)
