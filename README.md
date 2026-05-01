@@ -37,6 +37,9 @@ agentic-squad/
 │       │   └── story.md                # 메인 스토리
 │       └── result/                     # 📝 에이전트 작업 결과물 (에이전트 출력)
 │           └── {pattern}-{date}/       # 패턴별·날짜별 산출물
+├── tools/                              # Agent Tools — 에이전트 실행 도구
+│   ├── parse_excel.py                  # Excel(.xlsx) 파싱 도구
+│   └── parse_ppt.py                    # PowerPoint(.pptx) 파싱 도구
 └── patterns/                           # 멀티 에이전트 협업 패턴 정의
     ├── debate_critic/                  # 변증법적 토론 패턴
     ├── generator_evaluator/            # 생성-평가 반복 패턴
@@ -508,6 +511,58 @@ AI 투자 우선순위를 결정해줘
 1. **Init** — 에이전트 시작 시 `state.json`을 확인하여 미완료 세션이 있으면 이어서 진행
 2. **Step** — 각 단계(Phase/Round/Cycle) 완료 시 `progress.json`을 갱신
 3. **Complete** — 모든 단계 완료 시 `summary.md` 작성, `state.json`에서 세션을 `history`로 이동
+
+---
+
+## Agent Tools
+
+`tools/` 디렉토리는 Agent Team이 작업 중 호출할 수 있는 **실행 가능한 유틸리티 모음**입니다. Copilot CLI 에이전트는 `bash` 도구를 통해 이 스크립트들을 직접 실행하여 파일 분석·데이터 추출 같은 결정적인(deterministic) 작업을 LLM 추론에 의존하지 않고 수행합니다.
+
+### 내장 도구
+
+| 도구 | 경로 | 용도 | 의존성 |
+|------|------|------|--------|
+| `parse_excel.py` | `tools/parse_excel.py` | Excel(.xlsx) 파일을 JSON / Markdown / CSV로 파싱 | `openpyxl` |
+| `parse_ppt.py` | `tools/parse_ppt.py` | PowerPoint(.pptx) 파일을 JSON / Markdown으로 파싱 (슬라이드·테이블·이미지·노트 추출) | `python-pptx` |
+
+> 자세한 사용법과 옵션은 [`tools/README.md`](tools/README.md)를 참고하세요.
+
+### 사용 예시
+
+```bash
+# Excel 시트 구조 파악 후 특정 시트만 Markdown으로 추출
+python tools/parse_excel.py data.xlsx --sheets
+python tools/parse_excel.py data.xlsx --sheet "매출" --format markdown
+
+# PowerPoint 요약 후 특정 슬라이드 상세 분석
+python tools/parse_ppt.py deck.pptx --summary
+python tools/parse_ppt.py deck.pptx --slide 5 --notes --images --format markdown
+```
+
+### Tools와 Skills의 관계
+
+각 도구는 동일한 이름의 **Agent Skill**(`excel-parser`, `ppt-parser`)로 래핑되어 있어, 에이전트가 `.xlsx` / `.pptx` 파일을 만났을 때 스킬이 자동으로 활성화되며 적절한 도구 호출 방법을 지침으로 제공합니다.
+
+```
+사용자 입력 (.xlsx 첨부)
+   │
+   ▼
+Agent Skill (excel-parser)        ← 언제·왜·어떻게 호출할지 지침 제공
+   │
+   ▼
+Tool (tools/parse_excel.py)       ← 실제 파싱을 수행하는 실행 코드
+   │
+   ▼
+구조화된 데이터 (JSON / Markdown / CSV)
+```
+
+### 커스텀 도구 추가하기
+
+반복적으로 필요한 결정적 작업(파일 변환, 데이터 검증, 외부 CLI 래핑 등)이 있다면 도구로 분리하면 좋습니다.
+
+1. `tools/{tool-name}.py` (또는 `.sh` 등) 스크립트를 작성합니다
+2. `tools/README.md`에 사용법을 문서화합니다
+3. 필요 시 `.copilot/skills/{tool-name}/SKILL.md`를 추가하여 에이전트가 자동으로 도구를 인식하도록 만듭니다
 
 ---
 
