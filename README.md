@@ -519,7 +519,9 @@ AI 투자 우선순위를 결정해줘
 
 | 스킬 | 경로 | 설명 |
 |------|------|------|
-| `session-state-management` | `.github/skills/session-state-management/` | 파일 기반 세션 상태 관리 라이프사이클 |
+| `session-state-management` | `.copilot/skills/session-state-management/` | 파일 기반 세션 상태 관리 라이프사이클 |
+| `excel-parser` | `.copilot/skills/excel-parser/` | Excel (.xlsx) 파일 파싱 및 분석 |
+| `ppt-parser` | `.copilot/skills/ppt-parser/` | PowerPoint (.pptx) 파일 파싱 및 분석 |
 
 모든 패턴 에이전트(`debate_critic`, `generator_evaluator`, `planner_executor`, `leadership`, `research_report`)가 이 스킬을 참조하여 세션 상태를 영속화합니다. 각 에이전트에는 패턴 고유 설정(progress schema, 파일명 규칙, step 로직)만 남기고, 공통 라이프사이클은 스킬에 위임합니다.
 
