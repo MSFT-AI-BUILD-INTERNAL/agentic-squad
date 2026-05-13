@@ -1,6 +1,26 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+version_lt() {
+    [ "$1" != "$2" ] && [ "$(printf '%s\n%s\n' "$1" "$2" | sort -V | head -n1)" = "$1" ]
+}
+
+detect_copilot_package() {
+    local copilot_package="@github/copilot"
+
+    if [[ "$(uname -s)" == "Linux" ]] && command -v getconf &>/dev/null; then
+        local glibc_version
+        glibc_version="$(getconf GNU_LIBC_VERSION 2>/dev/null | awk '{print $2}')"
+
+        if [[ -n "$glibc_version" ]] && version_lt "$glibc_version" "2.33"; then
+            copilot_package="@github/copilot@1.0.45"
+            echo "  -> Detected glibc $glibc_version; installing Copilot CLI 1.0.45 for Ubuntu 20.04 compatibility." >&2
+        fi
+    fi
+
+    printf '%s\n' "$copilot_package"
+}
+
 echo "========================================="
 echo " Codespace Environment Setup"
 echo "========================================="
@@ -10,7 +30,8 @@ echo "========================================="
 # -------------------------------------------
 echo ""
 echo "[1/4] Installing GitHub Copilot CLI..."
-npm install -g @github/copilot
+COPILOT_PACKAGE="$(detect_copilot_package)"
+npm install -g "$COPILOT_PACKAGE"
 echo "  -> Done."
 
 # -------------------------------------------
@@ -41,6 +62,9 @@ if ! command -v node &>/dev/null; then
     nvm install --lts
 fi
 npm install -g @bradygaster/squad-cli
+# npm can skip the native node-pty dependency during global install.
+SQUAD_CLI_DIR="$(npm root -g)/@bradygaster/squad-cli"
+(cd "$SQUAD_CLI_DIR" && npm install)
 squad init
 echo "  -> Done."
 

@@ -4,9 +4,12 @@
 .squad/decisions/inbox/
 .squad/sessions/
 .squad/patterns/
+.squad/.first-run
 
 # Squad: SubSquad activation file (local to this machine)
 .squad-workstream
 
 # Project
 project
+# Squad: ignore runtime state (logs, inbox, sessions)
+.squad/.scratch/
